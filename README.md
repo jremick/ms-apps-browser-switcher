@@ -1,21 +1,21 @@
 # Microsoft Apps Default Browser Switcher
 I use a different browser for work vs personal and couldn't find an easy way for URLs from Microsoft Office and Teams to open in a specific browser, while all other apps' URLs open in a different browser. 
 
-This Python script monitors specified applications' active windows (Microsoft Office and Teams) and changes the default browser based on which application is in focus for > 5 seconds. Google Chrome is used for Outlook and Teams, Edge is used for everything else.
+This Python script monitors specified applications' active windows (such as Microsoft Office and Teams) and changes the default browser based on which application is in focus. Google Chrome is set for monitored applications, while Edge is used for everything else.
 
 ### Features
 
-- Monitors specified applications' active windows.
+- Monitors specified applications' active windows using Windows events.
 - Switches the default browser based on the focused application.
-- Reduces CPU usage by adjusting the check interval.
+- Efficiently detects application focus changes without constant polling.
+- Allows customization of browsers and applications to monitor.
 
 ### Requirements
 
 1. Python 3.x
 2. Required Python Libraries:
    - `psutil`
-   - `win32gui`
-   - `win32process`
+3. SetUserFTA utility - https://kolbi.cz/blog/2017/11/10/setdefaultbrowser-set-the-default-browser-per-user-on-windows-10-and-server-2016-build-1607/
   
 Written for use on Windows 11, but should also work on Windows 10.
   
@@ -23,11 +23,12 @@ Written for use on Windows 11, but should also work on Windows 10.
 
 1. Set up the environment:
     ```
-    pip install psutil pywin32
+    pip install psutil
     ```
 
-2. Modify the list of applications to monitor by adjusting the `apps` list in the script.
-3. If `DEBUG_MODE` is set to `True`, the script will print debug messages. Set to `False` to disable.
+2. Modify the list of applications to monitor by adjusting the APPS constant in the script.
+3. Customize the browsers by modifying the BROWSERS constant. (The first browser is set for monitored apps.)
+4. If DEBUG_MODE is set to True, the script will print debug messages. Set to False to disable (default).
 4. Run the script:
     ```
     python script_name.py
