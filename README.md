@@ -1,6 +1,4 @@
 # Microsoft Apps Default Browser Switcher
-I use a different browser for work vs personal and couldn't find an easy way for URLs from Microsoft Office and Teams to open in a specific browser, while all other apps' URLs open in a different browser. 
-
 This Python script monitors specified applications' active windows (such as Microsoft Office and Teams) and changes the default browser based on which application is in focus. Google Chrome is set for monitored applications, while Edge is used for everything else.
 
 ### Features
