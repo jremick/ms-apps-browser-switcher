@@ -39,9 +39,10 @@ Written for use on Windows 11, but should also work on Windows 10.
 3. If any other application is active for more than 5 seconds, the default browser is set to Edge.
 4. The script uses `SetUserFTA` command to change the default browser. Ensure you have the necessary permissions to change file type associations.
 
-### Note
+### Notes
 
-The `SetUserFTA` command and its functionality are not included in the script. Ensure you have this utility available and adjust the paths as needed.
+1. The `SetUserFTA` command and its functionality are not included in the script. Ensure you have this utility available and adjust the paths as needed.
+2. Microsoft added a setting to Outlook (probably Teams soon as well) to set hyperlink open preferences (choices: system default browser or Edge). For this script to work as expected, you'll want to set this to the system default browser. 
 
 ## Compiling into a Standalone Executable for Windows 11
 
