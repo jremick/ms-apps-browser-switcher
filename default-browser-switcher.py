@@ -6,7 +6,7 @@ import atexit
 import signal
 
 # Configuration
-APPS = [("teams.exe", "Microsoft Teams"), ("outlook.exe", "Outlook"), ("chrome.exe", "Chrome")] # Configure apps to monitor for
+APPS = [("teams.exe", "Microsoft Teams"), ("outlook.exe", "Outlook"), ("olk.exe", "Outlook"), ("chrome.exe", "Chrome")] # Configure apps to monitor for
 BROWSERS = {'chrome': 'ChromeHTML', 'edge': 'MSEdgeHTM'} # First browser is set for monitored apps
 PROTOCOLS = ['http', 'https', '.htm', '.html', '.xhtml', 'ftp', '.svg', '.webp', '.mhtml', '.shtml', '.xml']
 
@@ -65,10 +65,13 @@ def change_default_browser(browser):
 # Callback function that handles the foreground window change event
 def on_foreground_window_change(hWinEventHook, event, hwnd, idObject, idChild, dwEventThread, dwmsEventTime):
     active_window_pid = get_active_window_pid()
+    is_monitored_app = False
+    
     for process_name, app_name in APPS:
         try:
             process = psutil.Process(active_window_pid)
             if process_name.lower() == process.name().lower():
+                is_monitored_app = True
                 if DEBUG_MODE:
                     print(f"{app_name} is currently active")
                 change_default_browser('chrome')
@@ -77,7 +80,13 @@ def on_foreground_window_change(hWinEventHook, event, hwnd, idObject, idChild, d
             continue
 
     if DEBUG_MODE:
-        print('Other application is currently active')
+        if not is_monitored_app:
+            try:
+                process = psutil.Process(active_window_pid)
+                print(f"Non-monitored app active: {process.name()}")
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                print("Could not get process name for non-monitored app.")
+
     change_default_browser('edge')
 
 
